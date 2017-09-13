@@ -1,2 +1,2 @@
-# verbose-octo-spork
+# GSE_2_고동현_2015182002
 GSE_고동현_2015182002
