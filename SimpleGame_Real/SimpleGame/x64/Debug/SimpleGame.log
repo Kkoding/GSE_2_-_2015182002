@@ -1,0 +1,5 @@
+﻿  CMonster.cpp
+d:\3-2\gamesoftwareenginerring\simplegame_1018\simplegame\cmonster.cpp(59): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\3-2\gamesoftwareenginerring\simplegame_1018\simplegame\cmonster.cpp(60): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  SimpleGame.vcxproj -> D:\3-2\GameSoftwareEnginerring\SimpleGame_1018\x64\Debug\SimpleGame.exe
+  SimpleGame.vcxproj -> D:\3-2\GameSoftwareEnginerring\SimpleGame_1018\x64\Debug\SimpleGame.pdb (Partial PDB)
