@@ -5,22 +5,22 @@ CSceneMgr* CSceneMgr::m_hInstance = NULL;
 
 void CSceneMgr::Update(float fTime)
 {
-	auto begin = (m_lObj).begin();
+
 	auto end = (m_lObj).end();
-	for (; begin != end; ++begin)
+	for (auto begin = (m_lObj).begin(); begin != end; ++begin)
 	{
 		(*begin)->Update(fTime);
 	}
 	Check_Coll();
 }
 
-void CSceneMgr::Render(Renderer Rend)
+void CSceneMgr::Render()
 {
 	auto begin = (m_lObj).begin();
 	auto end = (m_lObj).end();
 
 	for (; begin != end; ++begin)
-		(*begin)->Render(Rend);
+		(*begin)->Render(m_renderer);
 }
 
 void CSceneMgr::AddObj(int x, int y)
@@ -31,11 +31,10 @@ void CSceneMgr::AddObj(int x, int y)
 
 bool check_coll(CObj* first, CObj* second)
 {
-	//cout << "F : " << first->GetInfo()->id << " S " << second->GetInfo()->id << endl;
-	if (first->GetInfo()->x < second->GetInfo()->x + second->GetInfo()->size &&
-		first->GetInfo()->y < second->GetInfo()->y + second->GetInfo()->size&&
-		first->GetInfo()->x + first->GetInfo()->size>second->GetInfo()->x&&
-		first->GetInfo()->y + first->GetInfo()->size > second->GetInfo()->y)
+	if (first->GetInfo()->x <= second->GetInfo()->x + second->GetInfo()->size / 2 &&
+		first->GetInfo()->y <= second->GetInfo()->y + second->GetInfo()->size / 2 &&
+		first->GetInfo()->x + first->GetInfo()->size / 2 >= second->GetInfo()->x&&
+		first->GetInfo()->y + first->GetInfo()->size / 2 >= second->GetInfo()->y)
 	{
 		first->SetCollision(TRUE);
 		second->SetCollision(TRUE);
@@ -46,12 +45,12 @@ bool check_coll(CObj* first, CObj* second)
 
 void CSceneMgr::Check_Coll()
 {
-	list<CObj*>::iterator start = m_lObj.begin();
+
 	list<CObj*>::iterator end = m_lObj.end();
 
 	list<CObj*>::iterator end2 = m_lObj.end();
 
-	for (; start != end; ++start)
+	for (list<CObj*>::iterator start = m_lObj.begin(); start != end; ++start)
 	{
 		for (list<CObj*>::iterator start2 = m_lObj.begin(); start2 != end2; ++start2)
 		{
@@ -70,17 +69,17 @@ void CSceneMgr::Check_Coll()
 				}
 			}
 		}
-
 	}
-
-
 }
 
 CSceneMgr::CSceneMgr()
 {
+	m_renderer = new Renderer(500, 500);
 }
 
 
 CSceneMgr::~CSceneMgr()
 {
+	delete m_renderer;
+
 }

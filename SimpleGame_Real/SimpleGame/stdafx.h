@@ -9,7 +9,7 @@
 
 using namespace std;
 
-#define MAX_OBJ 10
+#define MAX_OBJ 25
 #define WIDTH 500
 #define HEIGHT 500
 /////////////	OFFICIAL

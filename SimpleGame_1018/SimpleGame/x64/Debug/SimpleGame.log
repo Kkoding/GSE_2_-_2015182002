@@ -1,5 +1,13 @@
-﻿  건너뛰고 있습니다... (관련된 변경 내용 없음)
+﻿  stdafx.cpp
+  SimpleGame.cpp
+d:\3-2\gamesoftwareenginerring\gse_project\gse_2_-_2015182002\simplegame_1018\simplegame\simplegame.cpp(22): warning C4305: '초기화 중': 'double'에서 'float'(으)로 잘립니다.
   Renderer.cpp
+d:\3-2\gamesoftwareenginerring\gse_project\gse_2_-_2015182002\simplegame_1018\simplegame\renderer.cpp(62): warning C4267: '=': 'size_t'에서 'GLint'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  CSceneMgr.cpp
   CObj.cpp
-  SimpleGame.vcxproj -> D:\3-2\GameSoftwareEnginerring\SimpleGame_1018\x64\Debug\SimpleGame.exe
-  SimpleGame.vcxproj -> D:\3-2\GameSoftwareEnginerring\SimpleGame_1018\x64\Debug\SimpleGame.pdb (Partial PDB)
+  CMonster.cpp
+d:\3-2\gamesoftwareenginerring\gse_project\gse_2_-_2015182002\simplegame_1018\simplegame\cmonster.cpp(54): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\3-2\gamesoftwareenginerring\gse_project\gse_2_-_2015182002\simplegame_1018\simplegame\cmonster.cpp(55): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  코드를 생성하고 있습니다...
+  SimpleGame.vcxproj -> D:\3-2\GameSoftwareEnginerring\GSE_Project\GSE_2_-_2015182002\SimpleGame_1018\x64\Debug\SimpleGame.exe
+  SimpleGame.vcxproj -> D:\3-2\GameSoftwareEnginerring\GSE_Project\GSE_2_-_2015182002\SimpleGame_1018\x64\Debug\SimpleGame.pdb (Partial PDB)

@@ -9,7 +9,7 @@ protected:
 public:
 	virtual void Initialize() = 0;
 	virtual void Update(float) = 0;
-	virtual void Render(Renderer) = 0;
+	virtual void Render(Renderer*) = 0;
 	virtual void Release() = 0;
 
 	MonsterInfo* GetInfo();

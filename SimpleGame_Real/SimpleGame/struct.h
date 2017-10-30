@@ -15,8 +15,8 @@ typedef struct MonsterInfomation
 	float b;
 	float a;
 
-	int x_dir;
-	int y_dir;
+	float x_dir;
+	float y_dir;
 
 	int id;
 

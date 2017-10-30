@@ -15,8 +15,6 @@ but WITHOUT ANY WARRANTY.
 
 #include "Renderer.h"
 
-Renderer *g_Renderer = NULL;
-
 CObj * g_Obj = NULL;
 
 const float fTime = 0.1;
@@ -27,9 +25,9 @@ void RenderScene(void)
 	glClearColor(0.0f, 0.3f, 0.3f, 1.0f);
 
 	// Renderer Test
-	g_Renderer->DrawSolidRect(0, 0, 0, 4, 1, 0, 1, 1);
+	
 
-	CSceneMgr::Instance()->Render(*g_Renderer);
+	CSceneMgr::Instance()->Render();
 
 	glutSwapBuffers();
 }
@@ -40,8 +38,6 @@ void Idle(void)
 {
 	float StartTime = (float)timeGetTime() * 0.001f;
 	
-
-
 	CSceneMgr::Instance()->Update(NowTime - StartTime);
 
 	//CSceneMgr::Instance()->AddObj(rand() % 500 - 250, 250 - rand() % 500);
@@ -96,15 +92,15 @@ int main(int argc, char **argv)
 
 
 	// Initialize Renderer
-	g_Renderer = new Renderer(500, 500);
+	//g_Renderer = new Renderer(500, 500);
 
 	////////////
 	g_Obj = new CMonster();
 
-	if (!g_Renderer->IsInitialized())
-	{
-		std::cout << "Renderer could not be initialized.. \n";
-	}
+	//if (!g_Renderer->IsInitialized())
+	//{
+	//	std::cout << "Renderer could not be initialized.. \n";
+	//}
 
 	glutDisplayFunc(RenderScene);
 	glutIdleFunc(Idle);
@@ -114,7 +110,7 @@ int main(int argc, char **argv)
 
 	glutMainLoop();
 
-	delete g_Renderer;
+	//delete g_Renderer;
 
 	return 0;
 }

@@ -7,10 +7,11 @@ class CSceneMgr
 {
 private:
 	list<CObj*> m_lObj;
-	MonsterInfo Monster[50];
+	Renderer * m_renderer;
+
 public:
 	void Update(float);
-	void Render(Renderer);
+	void Render();
 	void AddObj(int, int);
 
 	void Check_Coll();
