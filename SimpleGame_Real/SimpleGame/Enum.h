@@ -1,1 +1,9 @@
 #pragma once
+
+enum OBJ_TYPE {
+	OBJ_BUILDING,
+	OBJ_CHARACTER,
+	OBJ_BULLET,
+	OBJ_ARROW,
+	OBJ_END
+};

@@ -12,10 +12,10 @@ private:
 public:
 	void Update(float);
 	void Render();
-	void AddObj(int, int);
+	void AddObj(int, int, OBJ_TYPE);
 
-	void Check_Coll();
-
+	bool Check_Collision(CObj*, CObj*);
+	void Collision();
 private:
 	static CSceneMgr* m_hInstance;
 public:

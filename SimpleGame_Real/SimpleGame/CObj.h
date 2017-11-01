@@ -5,17 +5,19 @@ class CObj
 {
 protected:
 	MonsterInfo m_Monster;
-
 public:
 	virtual void Initialize() = 0;
 	virtual void Update(float) = 0;
 	virtual void Render(Renderer*) = 0;
 	virtual void Release() = 0;
 
+public:
+	MonsterInfo* SetInfo();
 	MonsterInfo* GetInfo();
-	void SetColor(int r,int g,int b);
-
+	void SetColor(OBJ_TYPE);
+	void SetColor(int, int, int);
 	void SetCollision(bool Value) { m_Monster.Collision = Value; }
+	
 public:
 	CObj();
 	~CObj();

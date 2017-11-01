@@ -3,7 +3,6 @@
 
 typedef struct MonsterInfomation
 {
-	int type;
 
 	float x;
 	float y;
@@ -23,4 +22,10 @@ typedef struct MonsterInfomation
 	bool Collision;
 
 	int life;
+	int speed;
+	OBJ_TYPE m_type;
+
+	float f_Starttime;
+	float f_Endtime;
+
 }MonsterInfo;

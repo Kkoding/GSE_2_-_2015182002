@@ -6,12 +6,12 @@ CSceneMgr* CSceneMgr::m_hInstance = NULL;
 void CSceneMgr::Update(float fTime)
 {
 
-	auto end = (m_lObj).end();
-	for (auto begin = (m_lObj).begin(); begin != end; ++begin)
+	list<CObj*>::iterator end = (m_lObj).end();
+	for (list<CObj*>::iterator begin = (m_lObj).begin(); begin != end; ++begin)
 	{
 		(*begin)->Update(fTime);
 	}
-	Check_Coll();
+	Collision();
 }
 
 void CSceneMgr::Render()
@@ -23,49 +23,71 @@ void CSceneMgr::Render()
 		(*begin)->Render(m_renderer);
 }
 
-void CSceneMgr::AddObj(int x, int y)
+void CSceneMgr::AddObj(int x, int y, OBJ_TYPE type)
 {
-	if (m_lObj.size() < MAX_OBJ)
-		m_lObj.push_back(new CMonster(x, y));
+	m_lObj.push_back(new CMonster(x, y, type));
 }
 
-bool check_coll(CObj* first, CObj* second)
+bool CSceneMgr::Check_Collision(CObj* first, CObj* second)
 {
+	if (first->GetInfo()->life <= 0 && second->GetInfo()->life <= 0)
+		return false;
 	if (first->GetInfo()->x <= second->GetInfo()->x + second->GetInfo()->size / 2 &&
 		first->GetInfo()->y <= second->GetInfo()->y + second->GetInfo()->size / 2 &&
 		first->GetInfo()->x + first->GetInfo()->size / 2 >= second->GetInfo()->x&&
 		first->GetInfo()->y + first->GetInfo()->size / 2 >= second->GetInfo()->y)
 	{
-		first->SetCollision(TRUE);
-		second->SetCollision(TRUE);
-		return true;
+		if (OBJ_BUILDING == first->GetInfo()->m_type && OBJ_CHARACTER == second->GetInfo()->m_type)
+		{
+			if (first->GetInfo()->life > 0 && second->GetInfo()->life > 0) {
+				first->SetCollision(TRUE);
+				first->SetInfo()->life -= second->SetInfo()->life;
+				second->SetInfo()->life = 0;
+				second->SetCollision(TRUE);
+				return true;
+			}
+			else
+				return false;
+		}
+
+		if (OBJ_BULLET == first->GetInfo()->m_type && OBJ_CHARACTER == second->GetInfo()->m_type)
+		{
+			second->SetInfo()->life -= first->SetInfo()->life;
+			first->SetInfo()->life = 0;
+		}
 	}
 	return false;
 }
 
-void CSceneMgr::Check_Coll()
+
+
+void CSceneMgr::Collision()
 {
 
 	list<CObj*>::iterator end = m_lObj.end();
-
 	list<CObj*>::iterator end2 = m_lObj.end();
 
 	for (list<CObj*>::iterator start = m_lObj.begin(); start != end; ++start)
 	{
-		for (list<CObj*>::iterator start2 = m_lObj.begin(); start2 != end2; ++start2)
+		if ((*start)->GetInfo()->life > 0)
 		{
-			if (start != start2 && check_coll((*start), (*start2))) {
-				(*start)->SetColor(1, 0, 0);
-				(*start2)->SetColor(1, 0, 0);
+			for (list<CObj*>::iterator start2 = m_lObj.begin(); start2 != end2; ++start2)
+			{
+				if (start != start2 && Check_Collision((*start), (*start2))) {
+					(*start)->SetColor(1, 0, 0);
+					(*start2)->SetColor(1, 0, 0);
 
-			}
-			else if (start != start2 && false == check_coll((*start), (*start2))) {
-				if ((*start)->GetInfo()->Collision == TRUE
-					&& (*start2)->GetInfo()->Collision == TRUE) {
-					(*start)->SetCollision(FALSE);
-					(*start2)->SetCollision(FALSE);
-					(*start)->SetColor(1, 1, 1);
-					(*start2)->SetColor(1, 1, 1);
+				}
+				else if (start != start2 && false == Check_Collision((*start), (*start2)))
+				{
+					if ((*start)->GetInfo()->Collision == TRUE
+						&& (*start2)->GetInfo()->Collision == TRUE)
+					{
+						(*start)->SetCollision(FALSE);
+						(*start2)->SetCollision(FALSE);
+						(*start)->SetColor((*start)->GetInfo()->m_type);
+						(*start2)->SetColor((*start2)->GetInfo()->m_type);
+					}
 				}
 			}
 		}

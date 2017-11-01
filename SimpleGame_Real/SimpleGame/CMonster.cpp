@@ -24,12 +24,10 @@ void CMonster::Initialize()
 
 void CMonster::Update(float fTime)
 {
-	fTime *= 15;
+	m_Monster.x += m_Monster.x_dir *(m_Monster.speed*0.005);
+	m_Monster.y += m_Monster.y_dir *(m_Monster.speed*0.005);
 
-	m_Monster.x += m_Monster.x_dir * 0.5;
-	m_Monster.y += m_Monster.y_dir * 0.5;
-
-	if (250 - m_Monster.size <= m_Monster.x )
+	if (250 - m_Monster.size <= m_Monster.x)
 		m_Monster.x_dir *= -1;
 	else if (-250 + m_Monster.size >= m_Monster.x)
 		m_Monster.x_dir *= -1;
@@ -39,21 +37,30 @@ void CMonster::Update(float fTime)
 	else if (-250 + m_Monster.size >= m_Monster.y)
 		m_Monster.y_dir *= -1;
 
-
+	if (m_Monster.m_type == OBJ_BUILDING)
+	{
+		m_Monster.f_Endtime = GetTickCount();
+		
+		if (m_Monster.f_Endtime - m_Monster.f_Starttime > 5.f*fTime) {
+			m_Monster.f_Starttime = GetTickCount();
+			CSceneMgr::Instance()->AddObj(0, 0, OBJ_BULLET);
+		}
+	}
 }
 
 void CMonster::Render(Renderer* Rend)
 {
-	Rend->DrawSolidRect(
-		m_Monster.x,
-		m_Monster.y,
-		m_Monster.z,
-		m_Monster.size,
-		m_Monster.r,
-		m_Monster.g,
-		m_Monster.b,
-		m_Monster.a
-	);
+	if (m_Monster.life > 0)
+		Rend->DrawSolidRect(
+			m_Monster.x,
+			m_Monster.y,
+			m_Monster.z,
+			m_Monster.size,
+			m_Monster.r,
+			m_Monster.g,
+			m_Monster.b,
+			m_Monster.a
+		);
 }
 
 void CMonster::Release()
@@ -66,21 +73,49 @@ CMonster::CMonster()
 
 }
 
-CMonster::CMonster(int x, int y)
+CMonster::CMonster(int x, int y, OBJ_TYPE type)
 {
+	if (OBJ_BUILDING == type) {
+		m_Monster.size = 50;
+		m_Monster.life = 500;
+		m_Monster.speed = 0;
+		m_Monster.r = 1;
+		m_Monster.g = 1;
+		m_Monster.b = 0;
+		m_Monster.f_Starttime = GetTickCount();
+	}
+	else if (OBJ_CHARACTER == type) {
+		m_Monster.size = 10;
+		m_Monster.life = 10;
+		m_Monster.speed = 100;
+		m_Monster.r = 1;
+		m_Monster.g = 1;
+		m_Monster.b = 1;
+	}
+	else if (OBJ_BULLET == type) {
+		m_Monster.size = 2;
+		m_Monster.life = 20;
+		m_Monster.speed = 300;
+		m_Monster.r = 1;
+		m_Monster.g = 0;
+		m_Monster.b = 0;
+	}
+	else if (OBJ_ARROW == type) {
+		m_Monster.size = 2;
+		m_Monster.life = 10;
+		m_Monster.speed = 100;
+		m_Monster.r = 0;
+		m_Monster.g = 1;
+		m_Monster.b = 0;
+	}
+
 	static int idd = 0;
 	m_Monster.x = x;
 	m_Monster.y = y;
 	m_Monster.z = 0;
-	m_Monster.size = 20+rand()%21;
-	m_Monster.r = 1;
-	m_Monster.g = 1;
-	m_Monster.b = 1;
-	m_Monster.type = 0;
+	m_Monster.m_type = type;
 	m_Monster.a = 0;
-	m_Monster.id = idd++;
 	m_Monster.Collision = false;
-	m_Monster.life = 10;
 	Initialize();
 }
 

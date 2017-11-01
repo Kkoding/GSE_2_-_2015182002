@@ -13,6 +13,6 @@ public:
 
 public:
 	CMonster();
-	CMonster(int, int);
+	CMonster(int, int,OBJ_TYPE);
 	~CMonster();
 };

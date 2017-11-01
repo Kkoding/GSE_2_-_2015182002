@@ -9,7 +9,7 @@
 
 using namespace std;
 
-#define MAX_OBJ 25
+#define MAX_OBJ 500
 #define WIDTH 500
 #define HEIGHT 500
 /////////////	OFFICIAL
@@ -19,8 +19,8 @@ using namespace std;
 #include <Windows.h>
 
 /////////////	NON_OFFICIAL
-#include "struct.h"
 #include "Enum.h"
+#include "struct.h"
 #include "CSceneMgr.h"
 #include "Renderer.h"
 #include "CObj.h"
