@@ -41,7 +41,7 @@ int CMonster::Update(float fTime)
 	{
 		m_Monster.f_Endtime = GetTickCount();
 		
-		if (m_Monster.f_Endtime - m_Monster.f_Starttime > 5.f*fTime) {
+		if (m_Monster.f_Endtime - m_Monster.f_Starttime >0.5f) {
 			m_Monster.f_Starttime = GetTickCount();
 			CSceneMgr::Instance()->AddObj(0, 0, OBJ_BULLET);
 		}
