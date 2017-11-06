@@ -7,9 +7,14 @@ void CSceneMgr::Update(float fTime)
 {
 
 	list<CObj*>::iterator end = (m_lObj).end();
-	for (list<CObj*>::iterator begin = (m_lObj).begin(); begin != end; ++begin)
+	for (list<CObj*>::iterator begin = (m_lObj).begin(); begin != end;)
 	{
-		(*begin)->Update(fTime);
+		if (1 == ((*begin)->Update(fTime)))
+		{
+			delete *begin;
+			begin = m_lObj.erase(begin);
+		}
+		else ++begin;
 	}
 	Collision();
 }

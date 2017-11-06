@@ -16,6 +16,8 @@ public:
 
 	bool Check_Collision(CObj*, CObj*);
 	void Collision();
+
+
 private:
 	static CSceneMgr* m_hInstance;
 public:

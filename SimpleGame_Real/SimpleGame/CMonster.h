@@ -7,7 +7,7 @@ class CMonster : public CObj
 
 public:
 	void Initialize();
-	void Update(float);
+	int Update(float);
 	void Render(Renderer*);
 	void Release();
 

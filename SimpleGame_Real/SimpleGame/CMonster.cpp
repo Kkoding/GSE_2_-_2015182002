@@ -22,7 +22,7 @@ void CMonster::Initialize()
 		m_Monster.y_dir = 0;
 }
 
-void CMonster::Update(float fTime)
+int CMonster::Update(float fTime)
 {
 	m_Monster.x += m_Monster.x_dir *(m_Monster.speed*0.005);
 	m_Monster.y += m_Monster.y_dir *(m_Monster.speed*0.005);
@@ -46,6 +46,11 @@ void CMonster::Update(float fTime)
 			CSceneMgr::Instance()->AddObj(0, 0, OBJ_BULLET);
 		}
 	}
+
+	if (m_Monster.life <= 0)
+		return 1;
+
+	return 0;
 }
 
 void CMonster::Render(Renderer* Rend)

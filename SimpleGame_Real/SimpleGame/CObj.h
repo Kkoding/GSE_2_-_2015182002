@@ -7,7 +7,7 @@ protected:
 	MonsterInfo m_Monster;
 public:
 	virtual void Initialize() = 0;
-	virtual void Update(float) = 0;
+	virtual int Update(float) = 0;
 	virtual void Render(Renderer*) = 0;
 	virtual void Release() = 0;
 
