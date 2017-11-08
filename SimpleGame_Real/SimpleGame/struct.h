@@ -1,5 +1,6 @@
 #pragma once
 
+class CObj;
 
 typedef struct MonsterInfomation
 {
@@ -27,5 +28,10 @@ typedef struct MonsterInfomation
 
 	float f_Starttime;
 	float f_Endtime;
+
+
+	list<CObj*> m_bullet;
+
+	float m_fMakeTime;
 
 }MonsterInfo;

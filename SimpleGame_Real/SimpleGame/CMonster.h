@@ -4,7 +4,9 @@ class CObj;
 class Renderer;
 class CMonster : public CObj
 {
-
+private:
+	int text_num;
+	Renderer* m_textBuilding;
 public:
 	void Initialize();
 	int Update(float);
@@ -13,6 +15,6 @@ public:
 
 public:
 	CMonster();
-	CMonster(int, int,OBJ_TYPE);
+	CMonster(int, int,OBJ_TYPE,int);
 	~CMonster();
 };

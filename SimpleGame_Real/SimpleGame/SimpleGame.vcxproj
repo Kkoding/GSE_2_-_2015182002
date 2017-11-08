@@ -159,6 +159,7 @@
     <ClInclude Include="CObj.h" />
     <ClInclude Include="CSceneMgr.h" />
     <ClInclude Include="Enum.h" />
+    <ClInclude Include="LoadPng.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="struct.h" />
@@ -168,6 +169,7 @@
     <ClCompile Include="CMonster.cpp" />
     <ClCompile Include="CObj.cpp" />
     <ClCompile Include="CSceneMgr.cpp" />
+    <ClCompile Include="LoadPng.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="SimpleGame.cpp" />
     <ClCompile Include="stdafx.cpp">

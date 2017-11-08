@@ -36,12 +36,8 @@ float NowTime = (float)timeGetTime() ;
 
 void Idle(void)
 {
-	float StartTime = (float)timeGetTime() ;
 
-	CSceneMgr::Instance()->Update(NowTime - StartTime);
-
-	//CSceneMgr::Instance()->AddObj(rand() % 500 - 250, 250 - rand() % 500);
-	NowTime = (float)timeGetTime() ;
+	CSceneMgr::Instance()->Update(0);
 	RenderScene();
 }
 
@@ -54,7 +50,7 @@ void MouseInput(int button, int state, int x, int y)
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_UP)
 	{
 		if (button_state) {
-			CSceneMgr::Instance()->AddObj(x - 250, 250 - y, OBJ_CHARACTER);
+			CSceneMgr::Instance()->AddObj(x - 250, 250 - y, OBJ_CHARACTER, 0);
 		}
 		button_state = false;
 	}
@@ -74,7 +70,7 @@ void SpecialKeyInput(int key, int x, int y)
 int main(int argc, char **argv)
 {
 	// Initialize GL things
-
+	
 	srand((unsigned)time(NULL));
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
@@ -96,7 +92,7 @@ int main(int argc, char **argv)
 	////////////
 	g_Obj = new CMonster();
 
-	CSceneMgr::Instance()->AddObj(0, 0, OBJ_BUILDING);
+	CSceneMgr::Instance()->AddObj(0, 0, OBJ_BUILDING, 0);
 	//if (!g_Renderer->IsInitialized())
 	//{
 	//	std::cout << "Renderer could not be initialized.. \n";

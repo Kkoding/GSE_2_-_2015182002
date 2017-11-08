@@ -8,11 +8,12 @@ class CSceneMgr
 private:
 	list<CObj*> m_lObj;
 	Renderer * m_renderer;
-
+	float m_startTime;
+	float m_nowTime;
 public:
-	void Update(float);
+	void Update(float fTime);
 	void Render();
-	void AddObj(int, int, OBJ_TYPE);
+	void AddObj(int, int, OBJ_TYPE, int);
 
 	bool Check_Collision(CObj*, CObj*);
 	void Collision();
