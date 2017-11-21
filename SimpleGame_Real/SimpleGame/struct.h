@@ -4,7 +4,6 @@ class CObj;
 
 typedef struct MonsterInfomation
 {
-
 	float x;
 	float y;
 	float z;
@@ -25,6 +24,7 @@ typedef struct MonsterInfomation
 	int life;
 	int speed;
 	OBJ_TYPE m_type;
+	OBJ_TEAM m_team;
 
 	float f_Starttime;
 	float f_Endtime;

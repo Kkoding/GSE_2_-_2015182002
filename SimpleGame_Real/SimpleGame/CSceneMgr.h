@@ -10,13 +10,17 @@ private:
 	Renderer * m_renderer;
 	float m_startTime;
 	float m_nowTime;
+
+	float m_MakeTime;
 public:
 	void Update(float fTime);
 	void Render();
-	void AddObj(int, int, OBJ_TYPE, int);
+	void AddObj(int, int, OBJ_TYPE, OBJ_TEAM);
 
 	bool Check_Collision(CObj*, CObj*);
 	void Collision();
+
+
 
 
 private:

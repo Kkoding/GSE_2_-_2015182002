@@ -18,13 +18,15 @@ but WITHOUT ANY WARRANTY.
 CObj * g_Obj = NULL;
 
 const float fTime = 0.1;
-
+static float StartTime = timeGetTime()*0.001;
+static float NowTime;
+static float elTime;
+static float g_preTime = 0;
 void RenderScene(void)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glClearColor(0.0f, 0.3f, 0.3f, 1.0f);
 
-	// Renderer Test
 
 
 	CSceneMgr::Instance()->Render();
@@ -32,28 +34,38 @@ void RenderScene(void)
 	glutSwapBuffers();
 }
 
-float NowTime = (float)timeGetTime() ;
-
 void Idle(void)
 {
+	elTime = timeGetTime();
+	CSceneMgr::Instance()->Update(elTime - g_preTime);
 
-	CSceneMgr::Instance()->Update(0);
+	g_preTime = elTime;
 	RenderScene();
 }
 
 void MouseInput(int button, int state, int x, int y)
 {
 	static bool button_state = false;
-	static int count = 0;
+
+	NowTime = timeGetTime()*0.001f;
+
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
 		button_state = true;
+
+
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_UP)
 	{
-		if (button_state) {
-			CSceneMgr::Instance()->AddObj(x - 250, 250 - y, OBJ_CHARACTER, 0);
+		if (button_state && (NowTime - StartTime) > 2.f) {
+			//cout << NowTime - StartTime << endl;
+			if (y > 400) {
+				CSceneMgr::Instance()->AddObj(x - (WIDTH / 2), (HEIGHT / 2) - y, OBJ_CHARACTER, OBJ_TEAM_BLUE);
+				StartTime = timeGetTime()*0.001;
+			}
 		}
 		button_state = false;
 	}
+
+
 	RenderScene();
 }
 
@@ -70,7 +82,7 @@ void SpecialKeyInput(int key, int x, int y)
 int main(int argc, char **argv)
 {
 	// Initialize GL things
-	
+
 	srand((unsigned)time(NULL));
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
@@ -85,18 +97,9 @@ int main(int argc, char **argv)
 	else
 		std::cout << "GLEW 3.0 not supported\n ";
 
-
-	// Initialize Renderer
-	//g_Renderer = new Renderer(500, 500);
-
-	////////////
 	g_Obj = new CMonster();
 
-	CSceneMgr::Instance()->AddObj(0, 0, OBJ_BUILDING, 0);
-	//if (!g_Renderer->IsInitialized())
-	//{
-	//	std::cout << "Renderer could not be initialized.. \n";
-	//}
+	//CSceneMgr::Instance()->AddObj(0, 0, OBJ_BUILDING, 0);
 
 	glutDisplayFunc(RenderScene);
 	glutIdleFunc(Idle);
@@ -104,9 +107,9 @@ int main(int argc, char **argv)
 	glutMouseFunc(MouseInput);
 	glutSpecialFunc(SpecialKeyInput);
 
-	glutMainLoop();
 
-	//delete g_Renderer;
+	g_preTime = timeGetTime() ;
+	glutMainLoop();
 
 	return 0;
 }

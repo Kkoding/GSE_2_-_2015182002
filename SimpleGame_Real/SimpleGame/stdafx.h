@@ -12,6 +12,7 @@ using namespace std;
 #define MAX_OBJ 500
 #define WIDTH 500
 #define HEIGHT 500
+#define VALUE 0.1
 /////////////	OFFICIAL
 #include <list>
 #include <time.h>

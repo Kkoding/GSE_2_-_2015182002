@@ -15,6 +15,6 @@ public:
 
 public:
 	CMonster();
-	CMonster(int, int,OBJ_TYPE,int);
+	CMonster(int, int,OBJ_TYPE, OBJ_TEAM);
 	~CMonster();
 };
