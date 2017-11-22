@@ -54,25 +54,51 @@ bool CSceneMgr::Check_Collision(CObj* first, CObj* second)
 		first->GetInfo()->y <= second->GetInfo()->y + second->GetInfo()->size &&
 		first->GetInfo()->x + first->GetInfo()->size >= second->GetInfo()->x&&
 		first->GetInfo()->y + first->GetInfo()->size >= second->GetInfo()->y
-		||
+		/*||
 		second->GetInfo()->x <= first->GetInfo()->x + first->GetInfo()->size &&
 		second->GetInfo()->y <= first->GetInfo()->y + first->GetInfo()->size &&
 		second->GetInfo()->x + second->GetInfo()->size >= first->GetInfo()->x&&
-		second->GetInfo()->y + second->GetInfo()->size >= first->GetInfo()->y
+		second->GetInfo()->y + second->GetInfo()->size >= first->GetInfo()->y*/
 		)
 	{
-		if (first->GetInfo()->m_team != second->GetInfo()->m_team && first->GetInfo()->m_type != second->GetInfo()->m_type)
+		if (OBJ_CHARACTER == first->GetInfo()->m_type && OBJ_BUILDING == second->GetInfo()->m_type)
 		{
-			if ((OBJ_BULLET == first->GetInfo()->m_type && OBJ_ARROW == second->GetInfo()->m_type) ||
-				(OBJ_ARROW == first->GetInfo()->m_type && OBJ_BULLET == second->GetInfo()->m_type))
-				return false;
-			else {
-				int temphp = first->GetInfo()->life;
-				first->GetInfo()->life -= second->GetInfo()->life;
-				second->GetInfo()->life -= temphp;
-				return true;
-			}
+			int temphp = first->GetInfo()->life;
+			first->GetInfo()->life -= second->GetInfo()->life;
+			second->GetInfo()->life -= temphp;
+			return true;
 		}
+
+		if (OBJ_BULLET == first->GetInfo()->m_type && OBJ_CHARACTER == second->GetInfo()->m_type)
+		{
+			int temphp = first->GetInfo()->life;
+			first->GetInfo()->life -= second->GetInfo()->life;
+			second->GetInfo()->life -= temphp;
+			return true;
+		}
+		if (OBJ_BULLET == first->GetInfo()->m_type && OBJ_BUILDING == second->GetInfo()->m_type)
+		{
+			int temphp = first->GetInfo()->life;
+			first->GetInfo()->life -= second->GetInfo()->life;
+			second->GetInfo()->life -= temphp;
+			return true;
+		}
+		if (OBJ_ARROW == first->GetInfo()->m_type && OBJ_CHARACTER == second->GetInfo()->m_type)
+		{
+			int temphp = first->GetInfo()->life;
+			first->GetInfo()->life -= second->GetInfo()->life;
+			second->GetInfo()->life -= temphp;
+			return true;
+		}
+
+		if (OBJ_ARROW == first->GetInfo()->m_type && OBJ_BUILDING == second->GetInfo()->m_type)
+		{
+			int temphp = first->GetInfo()->life;
+			first->GetInfo()->life -= second->GetInfo()->life;
+			second->GetInfo()->life -= temphp;
+			return true;
+		}
+
 	}
 	return false;
 }
@@ -89,7 +115,9 @@ void CSceneMgr::Collision()
 	{
 		for (list<CObj*>::iterator start2 = m_lObj.begin(); start2 != end2; ++start2)
 		{
-			if (start != start2) {
+			if (start != start2 &&
+				(*start)->GetInfo()->m_team != (*start2)->GetInfo()->m_team &&
+				(*start)->GetInfo()->m_type != (*start2)->GetInfo()->m_type) {
 				Check_Collision((*start), (*start2));
 			}
 		}

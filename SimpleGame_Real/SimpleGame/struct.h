@@ -21,7 +21,7 @@ typedef struct MonsterInfomation
 
 	bool Collision;
 
-	int life;
+	float life;
 	int speed;
 	OBJ_TYPE m_type;
 	OBJ_TEAM m_team;

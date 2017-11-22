@@ -160,7 +160,7 @@
     <ClInclude Include="CSceneMgr.h" />
     <ClInclude Include="Enum.h" />
     <ClInclude Include="LoadPng.h" />
-    <ClInclude Include="Renderer.h" />
+    <ClInclude Include="RENDERER.H" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="struct.h" />
     <ClInclude Include="targetver.h" />
@@ -182,6 +182,14 @@
   <ItemGroup>
     <None Include="Shaders\SolidRect.fs" />
     <None Include="Shaders\SolidRect.vs" />
+    <None Include="Shaders\SolidRectGauge.fs" />
+    <None Include="Shaders\SolidRectGauge.vs" />
+    <None Include="Shaders\SolidRectWithTexture.fs" />
+    <None Include="Shaders\SolidRectWithTexture.vs" />
+    <None Include="Shaders\SolidRectWithTextureSeq.fs" />
+    <None Include="Shaders\SolidRectWithTextureSeq.vs" />
+    <None Include="Shaders\SolidRectXY.fs" />
+    <None Include="Shaders\SolidRectXY.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -13,8 +13,8 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="소스 파일\Shaders">
-      <UniqueIdentifier>{aa86e47f-445f-4440-9a76-173363b46c4e}</UniqueIdentifier>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{7be043bd-1f35-4283-b7eb-cadc1ec80799}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -25,9 +25,6 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="targetver.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="CObj.h">
@@ -48,15 +45,15 @@
     <ClInclude Include="LoadPng.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
+    <ClInclude Include="RENDERER.H">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="SimpleGame.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Renderer.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="CObj.cpp">
@@ -71,13 +68,40 @@
     <ClCompile Include="LoadPng.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Shaders\SolidRectXY.vs">
+      <Filter>Shaders</Filter>
+    </None>
     <None Include="Shaders\SolidRect.fs">
-      <Filter>소스 파일\Shaders</Filter>
+      <Filter>Shaders</Filter>
     </None>
     <None Include="Shaders\SolidRect.vs">
-      <Filter>소스 파일\Shaders</Filter>
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\SolidRectGauge.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\SolidRectGauge.vs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\SolidRectWithTexture.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\SolidRectWithTexture.vs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\SolidRectWithTextureSeq.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\SolidRectWithTextureSeq.vs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\SolidRectXY.fs">
+      <Filter>Shaders</Filter>
     </None>
   </ItemGroup>
 </Project>
