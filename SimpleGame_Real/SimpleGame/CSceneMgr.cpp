@@ -29,8 +29,28 @@ void CSceneMgr::Update(float fTime)
 
 void CSceneMgr::Render()
 {
+
 	auto begin = (m_lObj).begin();
 	auto end = (m_lObj).end();
+	m_renderer->DrawTexturedRectXY(
+		0,
+		0,
+		0,
+		WIDTH,
+		HEIGHT,
+		1.f,
+		1.f,
+		1.f,
+		1.f,
+		m_itext_num,
+		0.9f
+	);
+	m_renderer->DrawText(
+		-(WIDTH / 2),
+		HEIGHT / 2 - 20,
+		GLUT_BITMAP_HELVETICA_18,
+		0, 0, 0, "KDH'S SimpleGame"
+	);
 
 	for (; begin != end; ++begin) {
 		(*begin)->Render(m_renderer);
@@ -66,6 +86,7 @@ bool CSceneMgr::Check_Collision(CObj* first, CObj* second)
 			int temphp = first->GetInfo()->life;
 			first->GetInfo()->life -= second->GetInfo()->life;
 			second->GetInfo()->life -= temphp;
+			m_sound->PlaySound(m_collSIndex, false, 0.5);
 			return true;
 		}
 
@@ -130,13 +151,17 @@ CSceneMgr::CSceneMgr()
 	m_renderer = new Renderer(WIDTH, HEIGHT);
 	m_MakeTime = 0;
 
-	CSceneMgr::AddObj(0, (HEIGHT / 2) - 50, OBJ_BUILDING, OBJ_TEAM_RED);
-	CSceneMgr::AddObj(150, (HEIGHT / 2) - 70, OBJ_BUILDING, OBJ_TEAM_RED);
-	CSceneMgr::AddObj(-150, (HEIGHT / 2) - 70, OBJ_BUILDING, OBJ_TEAM_RED);
+	CSceneMgr::AddObj(0, (HEIGHT / 2) - 60, OBJ_BUILDING, OBJ_TEAM_RED);
+	CSceneMgr::AddObj(150, (HEIGHT / 2) - 150, OBJ_BUILDING, OBJ_TEAM_RED);
+	CSceneMgr::AddObj(-150, (HEIGHT / 2) - 150, OBJ_BUILDING, OBJ_TEAM_RED);
 
-	CSceneMgr::AddObj(0, -(HEIGHT / 2) + 50, OBJ_BUILDING, OBJ_TEAM_BLUE);
-	CSceneMgr::AddObj(150, -(HEIGHT / 2) + 70, OBJ_BUILDING, OBJ_TEAM_BLUE);
-	CSceneMgr::AddObj(-150, -(HEIGHT / 2) + 70, OBJ_BUILDING, OBJ_TEAM_BLUE);
+	CSceneMgr::AddObj(0, -(HEIGHT / 2) + 60, OBJ_BUILDING, OBJ_TEAM_BLUE);
+	CSceneMgr::AddObj(150, -(HEIGHT / 2) + 150, OBJ_BUILDING, OBJ_TEAM_BLUE);
+	CSceneMgr::AddObj(-150, -(HEIGHT / 2) + 150, OBJ_BUILDING, OBJ_TEAM_BLUE);
+	m_itext_num = m_textBuilding->CreatePngTexture("Resource/bg.png");
+	m_sound = new Sound();
+
+	m_collSIndex = m_sound->CreateSound("Resource/SFX_Monster_Basic_Normal_Die.ogg");
 }
 
 

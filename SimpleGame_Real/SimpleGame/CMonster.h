@@ -7,6 +7,7 @@ class CMonster : public CObj
 private:
 	int text_num;
 	Renderer* m_textBuilding;
+	char m_transTemp[10];
 public:
 	void Initialize();
 	int Update(float);

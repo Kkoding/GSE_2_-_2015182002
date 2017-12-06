@@ -45,6 +45,7 @@ using namespace std;
 /////////////	NON_OFFICIAL
 #include "Enum.h"
 #include "struct.h"
+#include "Sound.h"
 #include "CSceneMgr.h"
 #include "Renderer.h"
 #include "CObj.h"

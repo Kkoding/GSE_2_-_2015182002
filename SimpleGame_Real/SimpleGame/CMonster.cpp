@@ -93,7 +93,6 @@ void CMonster::Render(Renderer* Rend)
 {
 
 	if (m_Monster.m_type == OBJ_BUILDING) {
-
 		Rend->DrawTexturedRect(
 			m_Monster.x,
 			m_Monster.y,
@@ -106,7 +105,7 @@ void CMonster::Render(Renderer* Rend)
 			text_num,
 			0.1f
 		);
-
+		//Hp bar
 		Rend->DrawSolidRectGauge(
 			m_Monster.x,
 			m_Monster.y + m_Monster.size / 2,
@@ -117,13 +116,19 @@ void CMonster::Render(Renderer* Rend)
 			m_Monster.g,
 			m_Monster.b,
 			1.f,
-			m_Monster.life/BUIL_LIFE,
+			m_Monster.life / BUIL_LIFE,
 			0.01f
 		);
+		Rend->DrawText(
+			m_Monster.x,
+			m_Monster.y,
+			GLUT_BITMAP_HELVETICA_18,
+			0,0,0, itoa(m_Monster.life, m_transTemp,10)
+		);
+
 	}
 	else if (m_Monster.m_type == OBJ_CHARACTER) {
-
-		Rend->DrawSolidRect(
+		Rend->DrawTexturedRectSeq(
 			m_Monster.x,
 			m_Monster.y,
 			0,
@@ -131,9 +136,12 @@ void CMonster::Render(Renderer* Rend)
 			m_Monster.r,
 			m_Monster.g,
 			m_Monster.b,
-			m_Monster.a,
-			0.2
+			1,
+			m_Monster.texture_id,
+			(int)(m_Monster.texture_x) % 4, 0, 4, 1, 0.2f
 		);
+		m_Monster.texture_x += 0.5;
+		//Hp bar
 		Rend->DrawSolidRectGauge(
 			m_Monster.x,
 			m_Monster.y + m_Monster.size / 2,
@@ -149,7 +157,22 @@ void CMonster::Render(Renderer* Rend)
 		);
 
 	}
-	else if (m_Monster.m_type == OBJ_BULLET || m_Monster.m_type == OBJ_ARROW)
+	else if (m_Monster.m_type == OBJ_BULLET)
+	{
+		Rend->DrawParticle(m_Monster.x,
+			m_Monster.y,
+			0,
+			m_Monster.size,
+			1,
+			1,
+			1,
+			1,
+			m_Monster.x_dir*(-5), m_Monster.y_dir*(-5),
+			m_Monster.texture_id,
+			m_Monster.particle_seconds
+		);
+		m_Monster.particle_seconds += 0.025;
+
 		Rend->DrawSolidRect(
 			m_Monster.x,
 			m_Monster.y,
@@ -161,7 +184,9 @@ void CMonster::Render(Renderer* Rend)
 			m_Monster.a,
 			0.3
 		);
-	/*else if (m_Monster.m_type == OBJ_ARROW)
+		
+	}
+	else if (m_Monster.m_type == OBJ_ARROW)
 		Rend->DrawSolidRect(
 			m_Monster.x,
 			m_Monster.y,
@@ -172,9 +197,7 @@ void CMonster::Render(Renderer* Rend)
 			m_Monster.b,
 			m_Monster.a,
 			0.3
-		);*/
-
-
+		);
 }
 
 void CMonster::Release()
@@ -201,7 +224,7 @@ CMonster::CMonster(int x, int y, OBJ_TYPE type, OBJ_TEAM team)
 		m_Monster.size = BUIL_SIZE;
 		m_Monster.life = BUIL_LIFE;
 		m_Monster.speed = BUIL_SPEED;
-		
+
 		if (OBJ_TEAM_RED == team) {
 			text_num = m_textBuilding->CreatePngTexture("Resource/apple.png");
 			m_Monster.r = 1;
@@ -220,12 +243,14 @@ CMonster::CMonster(int x, int y, OBJ_TYPE type, OBJ_TEAM team)
 		m_Monster.life = CHAR_LIFE;
 		m_Monster.speed = CHAR_SPEED;
 		if (OBJ_TEAM_RED == team) {
+			m_Monster.texture_id = m_textBuilding->CreatePngTexture("Resource/LD.png");
 			m_Monster.r = 1;
 			m_Monster.g = 0;
 			m_Monster.b = 0;
 			m_Monster.a = 1;
 		}
 		else {
+			m_Monster.texture_id = m_textBuilding->CreatePngTexture("Resource/RD.png");
 			m_Monster.r = 0;
 			m_Monster.g = 0;
 			m_Monster.b = 1;
@@ -237,12 +262,14 @@ CMonster::CMonster(int x, int y, OBJ_TYPE type, OBJ_TEAM team)
 		m_Monster.life = BULL_LIFE;
 		m_Monster.speed = BULL_SPEED;
 		if (OBJ_TEAM_RED == team) {
+			m_Monster.texture_id = m_textBuilding->CreatePngTexture("Resource/bright_orange.png");
 			m_Monster.r = 1;
 			m_Monster.g = 0;
 			m_Monster.b = 0;
 			m_Monster.a = 1;
 		}
 		else {
+			m_Monster.texture_id = m_textBuilding->CreatePngTexture("Resource/bright_blue.png");
 			m_Monster.r = 0;
 			m_Monster.g = 0;
 			m_Monster.b = 1;
@@ -274,7 +301,9 @@ CMonster::CMonster(int x, int y, OBJ_TYPE type, OBJ_TEAM team)
 	else
 		m_Monster.y_dir = VALUE;
 
-
+	m_Monster.texture_x = 0;
+	m_Monster.texture_y = 1;
+	m_Monster.particle_seconds = 0;
 	Initialize();
 }
 

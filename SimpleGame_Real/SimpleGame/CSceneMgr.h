@@ -10,8 +10,16 @@ private:
 	Renderer * m_renderer;
 	float m_startTime;
 	float m_nowTime;
-
 	float m_MakeTime;
+	
+
+	// ¹è°æ
+	int m_itext_num;
+	Renderer* m_textBuilding;
+
+	// Sound
+	Sound* m_sound;
+	int m_collSIndex;
 public:
 	void Update(float fTime);
 	void Render();

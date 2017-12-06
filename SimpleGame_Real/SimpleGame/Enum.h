@@ -13,5 +13,12 @@ enum OBJ_TEAM {
 	OBJ_TEAM_BLUE,
 };
 
+enum OBJ_aType{
+	OBJ_aBuilding,
+	OBJ_aGROUND,
+	OBJ_aSKY,
+	OBJ_aEND
+};
+
 #define WIDTH 500
 #define HEIGHT 800

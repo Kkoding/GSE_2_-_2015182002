@@ -34,4 +34,8 @@ typedef struct MonsterInfomation
 
 	float m_fMakeTime;
 
+	float texture_x;
+	int texture_y;
+	int texture_id;
+	float particle_seconds;
 }MonsterInfo;

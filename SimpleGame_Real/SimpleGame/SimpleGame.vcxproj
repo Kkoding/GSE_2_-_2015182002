@@ -104,7 +104,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <SDLCheck>true</SDLCheck>
+      <SDLCheck>false</SDLCheck>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -160,7 +160,8 @@
     <ClInclude Include="CSceneMgr.h" />
     <ClInclude Include="Enum.h" />
     <ClInclude Include="LoadPng.h" />
-    <ClInclude Include="RENDERER.H" />
+    <ClInclude Include="Renderer.h" />
+    <ClInclude Include="Sound.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="struct.h" />
     <ClInclude Include="targetver.h" />
@@ -172,24 +173,13 @@
     <ClCompile Include="LoadPng.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="SimpleGame.cpp" />
+    <ClCompile Include="Sound.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Shaders\SolidRect.fs" />
-    <None Include="Shaders\SolidRect.vs" />
-    <None Include="Shaders\SolidRectGauge.fs" />
-    <None Include="Shaders\SolidRectGauge.vs" />
-    <None Include="Shaders\SolidRectWithTexture.fs" />
-    <None Include="Shaders\SolidRectWithTexture.vs" />
-    <None Include="Shaders\SolidRectWithTextureSeq.fs" />
-    <None Include="Shaders\SolidRectWithTextureSeq.vs" />
-    <None Include="Shaders\SolidRectXY.fs" />
-    <None Include="Shaders\SolidRectXY.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

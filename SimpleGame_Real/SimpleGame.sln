@@ -1,9 +1,25 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.10
+VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SimpleGame", "SimpleGame\SimpleGame.vcxproj", "{25179D6C-FA85-4619-8EDB-AC241382F6CA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shaders", "Shaders", "{2BC8F709-3707-4C47-92FF-DA255F2D46D2}"
+	ProjectSection(SolutionItems) = preProject
+		SimpleGame\Shaders\Particle.fs = SimpleGame\Shaders\Particle.fs
+		SimpleGame\Shaders\Particle.vs = SimpleGame\Shaders\Particle.vs
+		SimpleGame\Shaders\SolidRect.fs = SimpleGame\Shaders\SolidRect.fs
+		SimpleGame\Shaders\SolidRect.vs = SimpleGame\Shaders\SolidRect.vs
+		SimpleGame\Shaders\SolidRectGauge.fs = SimpleGame\Shaders\SolidRectGauge.fs
+		SimpleGame\Shaders\SolidRectGauge.vs = SimpleGame\Shaders\SolidRectGauge.vs
+		SimpleGame\Shaders\SolidRectWithTexture.fs = SimpleGame\Shaders\SolidRectWithTexture.fs
+		SimpleGame\Shaders\SolidRectWithTexture.vs = SimpleGame\Shaders\SolidRectWithTexture.vs
+		SimpleGame\Shaders\SolidRectWithTextureSeq.fs = SimpleGame\Shaders\SolidRectWithTextureSeq.fs
+		SimpleGame\Shaders\SolidRectWithTextureSeq.vs = SimpleGame\Shaders\SolidRectWithTextureSeq.vs
+		SimpleGame\Shaders\SolidRectXY.fs = SimpleGame\Shaders\SolidRectXY.fs
+		SimpleGame\Shaders\SolidRectXY.vs = SimpleGame\Shaders\SolidRectXY.vs
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -16,6 +16,7 @@ but WITHOUT ANY WARRANTY.
 #include "Renderer.h"
 
 CObj * g_Obj = NULL;
+Sound* g_Sound = NULL;
 
 const float fTime = 0.1;
 static float StartTime = timeGetTime()*0.001;
@@ -96,10 +97,13 @@ int main(int argc, char **argv)
 
 	else
 		std::cout << "GLEW 3.0 not supported\n ";
-
 	g_Obj = new CMonster();
 
-	//CSceneMgr::Instance()->AddObj(0, 0, OBJ_BUILDING, 0);
+	g_Sound = new Sound();
+
+	int index = g_Sound->CreateSound("Resource/BGM_Prepare.ogg");
+
+	g_Sound->PlaySoundW(index, true, 1);
 
 	glutDisplayFunc(RenderScene);
 	glutIdleFunc(Idle);
