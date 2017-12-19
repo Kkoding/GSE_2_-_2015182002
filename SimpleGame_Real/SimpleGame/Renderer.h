@@ -6,7 +6,7 @@
 #include "Dependencies\glew.h"
 #include "Dependencies\freeglut.h"
 
-#define MAX_TEXTURES 1000
+#define MAX_TEXTURES 100
 
 class Renderer
 {

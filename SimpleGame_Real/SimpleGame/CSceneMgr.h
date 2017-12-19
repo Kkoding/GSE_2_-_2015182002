@@ -29,15 +29,35 @@ private:
 	// Sound
 	Sound* m_sound;
 	int m_collSIndex;
+
+	// ¸®¼Ò½º
+	int Red_Building_Rsc;
+	int Red_Dragon_Rsc;
+	int Red_Bullet_Rsc;
+	int Red_Ghost_Rsc;
+
+	int Blue_Building_Rsc;
+	int Blue_Dragon_Rsc;
+	int Blue_Bullet_Rsc;
+	int Blue_Ghost_Rsc;
+
+
+public:
+	int GetResource(MonsterInfo&);
+	int GetResource(MonsterInfo&, OBJ_TYPE);
+
+
+
 public:
 	void Update(float fTime);
 	void Render(float);
-	void AddObj(int, int, OBJ_TYPE, OBJ_TEAM, char*);
+	void AddObj(int, int, OBJ_TYPE, OBJ_TEAM, int);
+	void AddObj(int, int, OBJ_TYPE, OBJ_TEAM);
 	void AddBackGround(int, int, int, int, char*);
 	bool Check_Collision(CObj*, CObj*);
 	void Collision();
 
-
+	void SetResource();
 
 
 private:

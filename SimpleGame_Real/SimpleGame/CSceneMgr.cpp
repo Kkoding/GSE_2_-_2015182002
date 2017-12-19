@@ -24,7 +24,7 @@ void CSceneMgr::Update(float fTime)
 	m_MakeTime += fTime*0.001;
 	if (m_MakeTime >= 1.f) {
 		m_lObj.push_back(new CMonster(-(WIDTH / 2) + rand() % (WIDTH + 1), (HEIGHT / 2) - rand() % (HEIGHT / 2 + 1),
-			OBJ_CHARACTER, OBJ_TEAM_RED, m_renderer, "Resource/LD.png"));
+			OBJ_CHARACTER, OBJ_TEAM_RED, m_renderer, Red_Dragon_Rsc));
 		m_MakeTime = 0;
 	}
 
@@ -65,18 +65,42 @@ void CSceneMgr::Render(float fTime)
 	m_renderer->DrawParticleClimate(0, 0, 0, 1, 1, 1, 1, 1, -0.3, -0.3, m_iSnowText, m_fSnowTime, 0.01f);
 }
 
-void CSceneMgr::AddObj(int x, int y, OBJ_TYPE type, OBJ_TEAM team, char* szTexture)
+void CSceneMgr::AddObj(int x, int y, OBJ_TYPE type, OBJ_TEAM team, int iResource)
 {
-	m_lObj.push_back(new CMonster(x, y, type, team, m_renderer,szTexture));
+	m_lObj.push_back(new CMonster(x, y, type, team, m_renderer, iResource));
+}
+
+void CSceneMgr::AddObj(int ix, int iy, OBJ_TYPE eType, OBJ_TEAM eTeam)
+{
+	int temp;
+	if (OBJ_TEAM_RED == eTeam) {
+		if (OBJ_BUILDING == eType)
+			temp = Red_Building_Rsc;
+		else if (OBJ_CHARACTER == eType)
+			temp = Red_Dragon_Rsc;
+		else if (OBJ_BULLET == eType)
+			temp = Red_Bullet_Rsc;
+	}
+	else
+	{
+		if (OBJ_BUILDING == eType)
+			temp= Blue_Building_Rsc;
+		else if (OBJ_CHARACTER == eType)
+			temp= Blue_Dragon_Rsc;
+		else if (OBJ_BULLET == eType)
+			temp= Blue_Bullet_Rsc;
+	}
+
+	if (OBJ_GHOST == eType)
+		temp = Red_Ghost_Rsc;
+
+	m_lObj.push_back(new CMonster(ix, iy, eType, eTeam, m_renderer, temp));
 }
 
 void CSceneMgr::AddBackGround(int ixPos, int iyPos, int iTx, int iTy, char* image_addr)
 {
 	m_vBackGround.push_back(new CBackGround(ixPos, iyPos, iTx, iTy, m_renderer->CreatePngTexture(image_addr)));
 }
-
-
-
 
 // ´Ù¸¥ÆÀ, ´Ù¸¥Å¸ÀÔ, ÃÑ¾Ë³¢¸® Ãæµ¹ X¤¤
 bool CSceneMgr::Check_Collision(CObj* first, CObj* second)
@@ -158,20 +182,77 @@ void CSceneMgr::Collision()
 	}
 }
 
+void CSceneMgr::SetResource()
+{
+	Red_Building_Rsc = m_renderer->CreatePngTexture("Resource/b_3x2_casino.png");
+	Red_Dragon_Rsc = m_renderer->CreatePngTexture("Resource/LD.png");
+	Red_Bullet_Rsc = m_renderer->CreatePngTexture("Resource/get_coin_01.png");
+	Red_Ghost_Rsc = m_renderer->CreatePngTexture("Resource/Red_Ghost.png");
+
+	Blue_Building_Rsc = m_renderer->CreatePngTexture("Resource/b_3x2_saloon.png");
+	//Blue_Dragon_Rsc = m_renderer->CreatePngTexture("Resource/Red_Ghost.png");
+	Blue_Dragon_Rsc = m_renderer->CreatePngTexture("Resource/RD.png");
+	Blue_Bullet_Rsc = m_renderer->CreatePngTexture("Resource/get_coin_02.png");
+}
+
+int CSceneMgr::GetResource(MonsterInfo& Info, OBJ_TYPE eType)
+{
+	if (OBJ_TEAM_RED == Info.m_team) {
+		if (OBJ_BUILDING == eType)
+			return Red_Building_Rsc;
+		if (OBJ_CHARACTER == eType)
+			return Red_Dragon_Rsc;
+		if (OBJ_BULLET == eType)
+			return Red_Bullet_Rsc;
+	}
+	else
+	{
+		if (OBJ_BUILDING == eType)
+			return Blue_Building_Rsc;
+		if (OBJ_CHARACTER == eType)
+			return Blue_Dragon_Rsc;
+		if (OBJ_BULLET == eType)
+			return Blue_Bullet_Rsc;
+	}
+}
+
+
+int CSceneMgr::GetResource(MonsterInfo& Info)
+{
+	if (OBJ_TEAM_RED == Info.m_team) {
+		if (OBJ_BUILDING == Info.m_type)
+			return Red_Building_Rsc;
+		if (OBJ_CHARACTER == Info.m_type)
+			return Red_Dragon_Rsc;
+		if (OBJ_BULLET == Info.m_type)
+			return Red_Bullet_Rsc;
+	}
+	else
+	{
+		if (OBJ_BUILDING == Info.m_type)
+			return Blue_Building_Rsc;
+		if (OBJ_CHARACTER == Info.m_type)
+			return Blue_Dragon_Rsc;
+		if (OBJ_BULLET == Info.m_type)
+			return Blue_Bullet_Rsc;
+	}
+}
+
 
 CSceneMgr::CSceneMgr()
 {
 	m_renderer = new Renderer(WIDTH, HEIGHT);
 	m_MakeTime = 0;
 	m_fSnowTime = 0;
+	SetResource();
 	//////////	ºôµù
-	CSceneMgr::AddObj(0, (HEIGHT / 2) - 60, OBJ_BUILDING, OBJ_TEAM_RED, "Resource/b_3x2_casino.png");
-	CSceneMgr::AddObj(150, (HEIGHT / 2) - 150, OBJ_BUILDING, OBJ_TEAM_RED, "Resource/b_3x2_casino.png");
-	CSceneMgr::AddObj(-150, (HEIGHT / 2) - 150, OBJ_BUILDING, OBJ_TEAM_RED, "Resource/b_3x2_casino.png");
+	CSceneMgr::AddObj(0, (HEIGHT / 2) - 60, OBJ_BUILDING, OBJ_TEAM_RED, Red_Building_Rsc);
+	CSceneMgr::AddObj(150, (HEIGHT / 2) - 150, OBJ_BUILDING, OBJ_TEAM_RED, Red_Building_Rsc);
+	CSceneMgr::AddObj(-150, (HEIGHT / 2) - 150, OBJ_BUILDING, OBJ_TEAM_RED, Red_Building_Rsc);
 
-	CSceneMgr::AddObj(0, -(HEIGHT / 2) + 60, OBJ_BUILDING, OBJ_TEAM_BLUE, "Resource/b_3x2_saloon.png");
-	CSceneMgr::AddObj(150, -(HEIGHT / 2) + 150, OBJ_BUILDING, OBJ_TEAM_BLUE, "Resource/b_3x2_saloon.png");
-	CSceneMgr::AddObj(-150, -(HEIGHT / 2) + 150, OBJ_BUILDING, OBJ_TEAM_BLUE, "Resource/b_3x2_saloon.png");
+	CSceneMgr::AddObj(0, -(HEIGHT / 2) + 60, OBJ_BUILDING, OBJ_TEAM_BLUE, Blue_Building_Rsc);
+	CSceneMgr::AddObj(150, -(HEIGHT / 2) + 150, OBJ_BUILDING, OBJ_TEAM_BLUE, Blue_Building_Rsc);
+	CSceneMgr::AddObj(-150, -(HEIGHT / 2) + 150, OBJ_BUILDING, OBJ_TEAM_BLUE, Blue_Building_Rsc);
 
 	/////////	¹è°æ ¿ÀºêÁ§Æ®
 	AddBackGround(0, 0, WIDTH, HEIGHT, "Resource/bg.png");

@@ -37,7 +37,7 @@ int CMonster::Update(float fTime)
 	else if (-(HEIGHT / 2) + m_Monster.size >= m_Monster.y)
 		m_Monster.y_dir *= -1;
 
-	if (OBJ_BULLET == m_Monster.m_type || OBJ_ARROW == m_Monster.m_type)
+	if (OBJ_BULLET == m_Monster.m_type || OBJ_ARROW == m_Monster.m_type || OBJ_GHOST == m_Monster.m_type)
 	{
 		if (WIDTH / 2 - m_Monster.size <= m_Monster.x)
 			return 1;
@@ -57,18 +57,17 @@ int CMonster::Update(float fTime)
 		if (OBJ_BUILDING == m_Monster.m_type)
 		{
 			if (OBJ_TEAM_RED == m_Monster.m_team) {
-				CSceneMgr::Instance()->AddObj(m_Monster.x, m_Monster.y, OBJ_BULLET, OBJ_TEAM_RED, "Resource/b_3x2_casino.png");
-				//cout << m_Monster.m_fMakeTime << endl;
+				CSceneMgr::Instance()->AddObj(m_Monster.x, m_Monster.y, OBJ_BULLET, OBJ_TEAM_RED, CSceneMgr::Instance()->GetResource(m_Monster,OBJ_BULLET));
 			}
 			else
-				CSceneMgr::Instance()->AddObj(m_Monster.x, m_Monster.y, OBJ_BULLET, OBJ_TEAM_BLUE, "Resource/b_3x2_saloon.png");
+				CSceneMgr::Instance()->AddObj(m_Monster.x, m_Monster.y, OBJ_BULLET, OBJ_TEAM_BLUE, CSceneMgr::Instance()->GetResource(m_Monster, OBJ_BULLET));
 		}
 		if (OBJ_CHARACTER == m_Monster.m_type)
 		{
 			if (OBJ_TEAM_RED == m_Monster.m_team)
-				CSceneMgr::Instance()->AddObj(m_Monster.x, m_Monster.y, OBJ_ARROW, OBJ_TEAM_RED, "Resource/LD.png");
+				CSceneMgr::Instance()->AddObj(m_Monster.x, m_Monster.y, OBJ_ARROW, OBJ_TEAM_RED, CSceneMgr::Instance()->GetResource(m_Monster));
 			else
-				CSceneMgr::Instance()->AddObj(m_Monster.x, m_Monster.y, OBJ_ARROW, OBJ_TEAM_BLUE, "Resource/RD.png");
+				CSceneMgr::Instance()->AddObj(m_Monster.x, m_Monster.y, OBJ_ARROW, OBJ_TEAM_BLUE, CSceneMgr::Instance()->GetResource(m_Monster));
 		}
 
 		m_Monster.m_fMakeTime = 0;
@@ -129,7 +128,19 @@ void CMonster::Render(Renderer* Rend, float fTime)
 			m_Monster.texture_id,
 			(int)(m_Monster.texture_x) % 4, 0, 4, 1, 0.2f
 		);
-		//cout << m_Monster.m_team << ", " << m_Monster.texture_id << endl;
+		/*	Rend->DrawTexturedRectSeq(
+				m_Monster.x,
+				m_Monster.y,
+				0,
+				m_Monster.size,
+				m_Monster.r,
+				m_Monster.g,
+				m_Monster.b,
+				1,
+				m_Monster.texture_id,
+				0, 1, 2, 2, 0.2f
+			);*/
+			//cout << m_Monster.m_team << ", " << m_Monster.texture_id << endl;
 		m_Monster.texture_x += fTime*0.01f;
 		//Hp bar
 		Rend->DrawSolidRectGauge(
@@ -190,6 +201,21 @@ void CMonster::Render(Renderer* Rend, float fTime)
 			0.3
 		);
 
+	if (m_Monster.m_type == OBJ_GHOST) {
+		Rend->DrawTexturedRectSeq(
+			m_Monster.x,
+			m_Monster.y,
+			0,
+			72,
+			m_Monster.r,
+			m_Monster.g,
+			m_Monster.b,
+			1,
+			m_Monster.texture_id,
+			0, 0, 2, 1, 0.2f
+		);
+		m_Monster.texture_x += fTime*0.01f;
+	}
 }
 
 void CMonster::Release()
@@ -202,7 +228,7 @@ CMonster::CMonster()
 
 }
 
-CMonster::CMonster(int x, int y, OBJ_TYPE type, OBJ_TEAM team, Renderer* render, char* szImage)
+CMonster::CMonster(int x, int y, OBJ_TYPE type, OBJ_TEAM team, Renderer* render, int iResource)
 {
 	m_Monster.x = x;
 	m_Monster.y = y;
@@ -216,13 +242,13 @@ CMonster::CMonster(int x, int y, OBJ_TYPE type, OBJ_TEAM team, Renderer* render,
 		m_Monster.life = BUIL_LIFE;
 		m_Monster.speed = BUIL_SPEED;
 		if (OBJ_TEAM_RED == team) {
-			m_Monster.texture_id = render->CreatePngTexture(szImage);
+			m_Monster.texture_id = iResource;
 			m_Monster.r = 1;
 			m_Monster.g = 0;
 			m_Monster.b = 0;
 		}
 		else {
-			m_Monster.texture_id = render->CreatePngTexture(szImage);
+			m_Monster.texture_id = iResource;
 			m_Monster.r = 0;
 			m_Monster.g = 0;
 			m_Monster.b = 1;
@@ -233,14 +259,14 @@ CMonster::CMonster(int x, int y, OBJ_TYPE type, OBJ_TEAM team, Renderer* render,
 		m_Monster.life = CHAR_LIFE;
 		m_Monster.speed = CHAR_SPEED;
 		if (OBJ_TEAM_RED == team) {
-			m_Monster.texture_id = render->CreatePngTexture(szImage);
+			m_Monster.texture_id = iResource;
 			m_Monster.r = 1;
 			m_Monster.g = 0;
 			m_Monster.b = 0;
 			m_Monster.a = 1;
 		}
 		else {
-			m_Monster.texture_id = render->CreatePngTexture(szImage);
+			m_Monster.texture_id = iResource;
 			m_Monster.r = 0;
 			m_Monster.g = 0;
 			m_Monster.b = 1;
@@ -252,14 +278,14 @@ CMonster::CMonster(int x, int y, OBJ_TYPE type, OBJ_TEAM team, Renderer* render,
 		m_Monster.life = BULL_LIFE;
 		m_Monster.speed = BULL_SPEED;
 		if (OBJ_TEAM_RED == team) {
-			m_Monster.texture_id = render->CreatePngTexture(szImage);
+			m_Monster.texture_id = iResource;
 			m_Monster.r = 1;
 			m_Monster.g = 0;
 			m_Monster.b = 0;
 			m_Monster.a = 1;
 		}
 		else {
-			m_Monster.texture_id = render->CreatePngTexture(szImage);
+			m_Monster.texture_id = iResource;
 			m_Monster.r = 0;
 			m_Monster.g = 0;
 			m_Monster.b = 1;
@@ -282,9 +308,16 @@ CMonster::CMonster(int x, int y, OBJ_TYPE type, OBJ_TEAM team, Renderer* render,
 			m_Monster.b = 0;
 			m_Monster.a = 1;
 		}
-
-
 	}
+	if (OBJ_GHOST == type) {
+		m_Monster.texture_id = iResource;
+		m_Monster.r = 1;
+		m_Monster.g = 0;
+		m_Monster.b = 0;
+		m_Monster.a = 1;
+	}
+
+
 	if (OBJ_TEAM_RED == m_Monster.m_team)
 		m_Monster.y_dir = -VALUE;
 	else
