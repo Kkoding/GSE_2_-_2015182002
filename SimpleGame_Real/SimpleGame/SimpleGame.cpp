@@ -30,17 +30,17 @@ void RenderScene(void)
 	glClearDepth(1.f);
 
 
-	CSceneMgr::Instance()->Render();
+	elTime = timeGetTime();
+	CSceneMgr::Instance()->Update(elTime - g_preTime);
+	CSceneMgr::Instance()->Render(elTime - g_preTime);
 
+	g_preTime = elTime;
 	glutSwapBuffers();
 }
 
 void Idle(void)
 {
-	elTime = timeGetTime();
-	CSceneMgr::Instance()->Update(elTime - g_preTime);
-
-	g_preTime = elTime;
+	
 	RenderScene();
 }
 
@@ -59,7 +59,7 @@ void MouseInput(int button, int state, int x, int y)
 		if (button_state && (NowTime - StartTime) > 2.f) {
 			//cout << NowTime - StartTime << endl;
 			if (y > 400) {
-				CSceneMgr::Instance()->AddObj(x - (WIDTH / 2), (HEIGHT / 2) - y, OBJ_CHARACTER, OBJ_TEAM_BLUE);
+				CSceneMgr::Instance()->AddObj(x - (WIDTH / 2), (HEIGHT / 2) - y, OBJ_CHARACTER, OBJ_TEAM_BLUE, "Resource/RD.png");
 				StartTime = timeGetTime()*0.001;
 			}
 		}

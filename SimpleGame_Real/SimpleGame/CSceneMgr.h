@@ -2,6 +2,7 @@
 
 class CObj;
 class Renderer;
+class CBackGround;
 
 class CSceneMgr
 {
@@ -12,19 +13,27 @@ private:
 	float m_nowTime;
 	float m_MakeTime;
 	
+	
+	// ´«
+	float m_fSnowTime;
+	float m_fSnowAddTime;
+	int m_iSnowText;
+	float m_fSnowgX;
+	float m_fSnowgY;
 
 	// ¹è°æ
+	vector<CBackGround*> m_vBackGround;
 	int m_itext_num;
-	Renderer* m_textBuilding;
+	int m_iTree;
 
 	// Sound
 	Sound* m_sound;
 	int m_collSIndex;
 public:
 	void Update(float fTime);
-	void Render();
-	void AddObj(int, int, OBJ_TYPE, OBJ_TEAM);
-
+	void Render(float);
+	void AddObj(int, int, OBJ_TYPE, OBJ_TEAM, char*);
+	void AddBackGround(int, int, int, int, char*);
 	bool Check_Collision(CObj*, CObj*);
 	void Collision();
 

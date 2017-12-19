@@ -10,15 +10,21 @@ void CSceneMgr::Update(float fTime)
 	{
 		if (1 == ((*begin)->Update(fTime)))
 		{
-			delete *begin;
+			if (*begin) {
+				delete *begin;
+				(*begin) = NULL;
+			}
 			begin = m_lObj.erase(begin);
+			if (begin == end)
+				break;
 		}
 		else ++begin;
 	}
 
 	m_MakeTime += fTime*0.001;
 	if (m_MakeTime >= 1.f) {
-		m_lObj.push_back(new CMonster(-(WIDTH / 2) + rand() % (WIDTH + 1), (HEIGHT / 2) - rand() % (HEIGHT / 2 + 1), OBJ_CHARACTER, OBJ_TEAM_RED));
+		m_lObj.push_back(new CMonster(-(WIDTH / 2) + rand() % (WIDTH + 1), (HEIGHT / 2) - rand() % (HEIGHT / 2 + 1),
+			OBJ_CHARACTER, OBJ_TEAM_RED, m_renderer, "Resource/LD.png"));
 		m_MakeTime = 0;
 	}
 
@@ -27,24 +33,18 @@ void CSceneMgr::Update(float fTime)
 
 }
 
-void CSceneMgr::Render()
+void CSceneMgr::Render(float fTime)
 {
 
-	auto begin = (m_lObj).begin();
-	auto end = (m_lObj).end();
-	m_renderer->DrawTexturedRectXY(
-		0,
-		0,
-		0,
-		WIDTH,
-		HEIGHT,
-		1.f,
-		1.f,
-		1.f,
-		1.f,
-		m_itext_num,
-		0.9f
-	);
+	// 배경 (계속해서 그려주자)
+	auto Bg_Begin = (m_vBackGround).begin();
+	auto Bg_End = (m_vBackGround).end();
+	for (; Bg_Begin != Bg_End; Bg_Begin++)
+		(*Bg_Begin)->Render(m_renderer);
+
+
+
+
 	m_renderer->DrawText(
 		-(WIDTH / 2),
 		HEIGHT / 2 - 20,
@@ -52,14 +52,27 @@ void CSceneMgr::Render()
 		0, 0, 0, "KDH'S SimpleGame"
 	);
 
+	auto begin = (m_lObj).begin();
+	auto end = (m_lObj).end();
 	for (; begin != end; ++begin) {
-		(*begin)->Render(m_renderer);
+		(*begin)->Render(m_renderer, fTime);
 	}
+	m_fSnowTime += fTime*0.01f;
+	m_fSnowAddTime += m_fSnowTime;
+
+
+
+	m_renderer->DrawParticleClimate(0, 0, 0, 1, 1, 1, 1, 1, -0.3, -0.3, m_iSnowText, m_fSnowTime, 0.01f);
 }
 
-void CSceneMgr::AddObj(int x, int y, OBJ_TYPE type, OBJ_TEAM team)
+void CSceneMgr::AddObj(int x, int y, OBJ_TYPE type, OBJ_TEAM team, char* szTexture)
 {
-	m_lObj.push_back(new CMonster(x, y, type, team));
+	m_lObj.push_back(new CMonster(x, y, type, team, m_renderer,szTexture));
+}
+
+void CSceneMgr::AddBackGround(int ixPos, int iyPos, int iTx, int iTy, char* image_addr)
+{
+	m_vBackGround.push_back(new CBackGround(ixPos, iyPos, iTx, iTy, m_renderer->CreatePngTexture(image_addr)));
 }
 
 
@@ -150,17 +163,27 @@ CSceneMgr::CSceneMgr()
 {
 	m_renderer = new Renderer(WIDTH, HEIGHT);
 	m_MakeTime = 0;
+	m_fSnowTime = 0;
+	//////////	빌딩
+	CSceneMgr::AddObj(0, (HEIGHT / 2) - 60, OBJ_BUILDING, OBJ_TEAM_RED, "Resource/b_3x2_casino.png");
+	CSceneMgr::AddObj(150, (HEIGHT / 2) - 150, OBJ_BUILDING, OBJ_TEAM_RED, "Resource/b_3x2_casino.png");
+	CSceneMgr::AddObj(-150, (HEIGHT / 2) - 150, OBJ_BUILDING, OBJ_TEAM_RED, "Resource/b_3x2_casino.png");
 
-	CSceneMgr::AddObj(0, (HEIGHT / 2) - 60, OBJ_BUILDING, OBJ_TEAM_RED);
-	CSceneMgr::AddObj(150, (HEIGHT / 2) - 150, OBJ_BUILDING, OBJ_TEAM_RED);
-	CSceneMgr::AddObj(-150, (HEIGHT / 2) - 150, OBJ_BUILDING, OBJ_TEAM_RED);
+	CSceneMgr::AddObj(0, -(HEIGHT / 2) + 60, OBJ_BUILDING, OBJ_TEAM_BLUE, "Resource/b_3x2_saloon.png");
+	CSceneMgr::AddObj(150, -(HEIGHT / 2) + 150, OBJ_BUILDING, OBJ_TEAM_BLUE, "Resource/b_3x2_saloon.png");
+	CSceneMgr::AddObj(-150, -(HEIGHT / 2) + 150, OBJ_BUILDING, OBJ_TEAM_BLUE, "Resource/b_3x2_saloon.png");
 
-	CSceneMgr::AddObj(0, -(HEIGHT / 2) + 60, OBJ_BUILDING, OBJ_TEAM_BLUE);
-	CSceneMgr::AddObj(150, -(HEIGHT / 2) + 150, OBJ_BUILDING, OBJ_TEAM_BLUE);
-	CSceneMgr::AddObj(-150, -(HEIGHT / 2) + 150, OBJ_BUILDING, OBJ_TEAM_BLUE);
-	m_itext_num = m_textBuilding->CreatePngTexture("Resource/bg.png");
+	/////////	배경 오브젝트
+	AddBackGround(0, 0, WIDTH, HEIGHT, "Resource/bg.png");
+	AddBackGround(0, 0, 48, 84, "Resource/e_1x1_tree.png");
+	AddBackGround(190, 50, 48, 84, "Resource/e_1x2_bones.png");
+	AddBackGround(-120, -80, 48, 66, "Resource/e_1x1_rocks_a.png");
+	AddBackGround(-120, 80, 48, 66, "Resource/e_1x1_cactus_a.png");
+
+	m_iSnowText = m_renderer->CreatePngTexture("Resource/explosion_01.png");
 	m_sound = new Sound();
-
+	m_fSnowgX = -0.1;
+	m_fSnowgY = -0.1;
 	m_collSIndex = m_sound->CreateSound("Resource/SFX_Monster_Basic_Normal_Die.ogg");
 }
 

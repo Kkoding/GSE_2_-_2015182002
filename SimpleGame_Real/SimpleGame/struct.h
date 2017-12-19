@@ -39,3 +39,14 @@ typedef struct MonsterInfomation
 	int texture_id;
 	float particle_seconds;
 }MonsterInfo;
+
+
+typedef struct BackGround_Information
+{
+	int i_xPos;
+	int i_yPos;
+	int i_Texture;
+	int i_Texture_xSize;
+	int i_Texture_ySize;
+
+}BackGroundInfo;
