@@ -292,6 +292,7 @@ bool CSceneMgr::Check_Collision(CObj* first, CObj* second)
 			int temphp = first->GetInfo()->life;
 			first->GetInfo()->life -= second->GetInfo()->life;
 			second->GetInfo()->life -= temphp;
+			m_sound->PlaySound(m_CollBuilding, false, 0.5);
 			if (first->GetInfo()->life < 0)
 				b_HealCt = false;
 			return true;
@@ -300,6 +301,7 @@ bool CSceneMgr::Check_Collision(CObj* first, CObj* second)
 			int temphp = first->GetInfo()->life;
 			first->GetInfo()->life -= second->GetInfo()->life;
 			second->GetInfo()->life -= temphp;
+			m_sound->PlaySound(m_CollBuilding, false, 0.5);
 			if (first->GetInfo()->life < 0)
 				b_HealCt = false;
 			return true;
@@ -309,6 +311,7 @@ bool CSceneMgr::Check_Collision(CObj* first, CObj* second)
 			int temphp = first->GetInfo()->life;
 			first->GetInfo()->life -= second->GetInfo()->life;
 			second->GetInfo()->life -= temphp;
+			m_sound->PlaySound(m_CollBuilding, false, 0.5);
 			if (first->GetInfo()->life < 0)
 				b_HealCt = false;
 			return true;
@@ -317,6 +320,7 @@ bool CSceneMgr::Check_Collision(CObj* first, CObj* second)
 			int temphp = first->GetInfo()->life;
 			first->GetInfo()->life -= second->GetInfo()->life;
 			second->GetInfo()->life -= temphp;
+			m_sound->PlaySound(m_CollBuilding, false, 0.5);
 			if (first->GetInfo()->life < 0)
 				b_HealCt = false;
 			return true;
@@ -370,6 +374,7 @@ bool CSceneMgr::Same_Team_Collision(CObj* first, CObj* second)
 		{
 			first->GetInfo()->life += second->GetInfo()->life;
 			second->GetInfo()->life = 0;
+			m_sound->PlaySound(m_HealKitSnd, false, 0.5);
 			return true;
 		}
 
@@ -377,6 +382,7 @@ bool CSceneMgr::Same_Team_Collision(CObj* first, CObj* second)
 		{
 			first->GetInfo()->life += second->GetInfo()->life;
 			second->GetInfo()->life = 0;
+			m_sound->PlaySound(m_HealKitSnd, false, 0.5);
 			return true;
 		}
 	}
@@ -548,6 +554,9 @@ CSceneMgr::CSceneMgr()
 	m_fSnowgY = -0.1;
 	m_collSIndex = m_sound->CreateSound("Resource/SFX_Monster_Basic_Normal_Die.ogg");
 	m_CollBuilding = m_sound->CreateSound("Resource/Scud3.ogg");
+	m_HealKitSnd = m_sound->CreateSound("Resource/GetHeal.ogg");
+
+
 	m_eGameState = GS_END;
 }
 

@@ -350,7 +350,7 @@ void CMonster::Render(Renderer* Rend, float fTime)
 			1.f,
 			1.f,
 			m_Monster.texture_id,
-			0.1f
+			0.3f
 		);
 		//Hp bar
 		Rend->DrawSolidRectGauge(

@@ -35,6 +35,7 @@ private:
 	Sound* m_sound;
 	int m_collSIndex;
 	int m_CollBuilding;
+	int m_HealKitSnd;
 
 	// ¸®¼Ò½º
 	int Red_Building_Rsc;
