@@ -33,11 +33,12 @@ typedef struct MonsterInfomation
 	list<CObj*> m_bullet;
 
 	float m_fMakeTime;
-
 	float texture_x;
 	int texture_y;
 	int texture_id;
 	float particle_seconds;
+
+	OBJ_AI m_ai;
 }MonsterInfo;
 
 

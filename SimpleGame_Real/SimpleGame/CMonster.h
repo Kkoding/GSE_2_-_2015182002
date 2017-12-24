@@ -13,6 +13,9 @@ public:
 	void Render(Renderer*, float);
 	void Release();
 
+
+	 
+
 public:
 	CMonster();
 	CMonster(int, int,OBJ_TYPE, OBJ_TEAM, Renderer*, int);

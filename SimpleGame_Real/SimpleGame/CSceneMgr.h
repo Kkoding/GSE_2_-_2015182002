@@ -9,11 +9,16 @@ class CSceneMgr
 private:
 	list<CObj*> m_lObj;
 	Renderer * m_renderer;
+
+
+	float m_fwX;
+	float m_fwY;
+
 	float m_startTime;
 	float m_nowTime;
 	float m_MakeTime;
-	
-	
+
+
 	// ´«
 	float m_fSnowTime;
 	float m_fSnowAddTime;
@@ -29,18 +34,32 @@ private:
 	// Sound
 	Sound* m_sound;
 	int m_collSIndex;
+	int m_CollBuilding;
 
 	// ¸®¼Ò½º
 	int Red_Building_Rsc;
 	int Red_Dragon_Rsc;
 	int Red_Bullet_Rsc;
 	int Red_Ghost_Rsc;
+	int Red_Warrior_Rsc;
 
 	int Blue_Building_Rsc;
 	int Blue_Dragon_Rsc;
 	int Blue_Bullet_Rsc;
 	int Blue_Ghost_Rsc;
+	int Blue_Warrior_Rsc;
 
+	int Win_Rsc;
+	int Lose_Rsc;
+	int Help_Rsc;
+
+	int Mode_Rsc;
+	int Ez_Rsc;
+	int Hard_Rsc;
+	OBJ_GAMESTATE m_eGameState;
+
+	int Blue_HealCt_Rsc;
+	int Blue_HealKit_Rsc;
 
 public:
 	int GetResource(MonsterInfo&);
@@ -49,16 +68,23 @@ public:
 
 
 public:
+	void Initialize();
 	void Update(float fTime);
 	void Render(float);
 	void AddObj(int, int, OBJ_TYPE, OBJ_TEAM, int);
 	void AddObj(int, int, OBJ_TYPE, OBJ_TEAM);
 	void AddBackGround(int, int, int, int, char*);
-	bool Check_Collision(CObj*, CObj*);
 	void Collision();
 
-	void SetResource();
+	bool Check_Collision(CObj*, CObj*);
+	bool SameSollision(CObj*, CObj*);
 
+	bool Same_Team_Collision(CObj*, CObj*);
+
+	void SetResource();
+	void Check_GameOver();
+
+	void Release();
 
 private:
 	static CSceneMgr* m_hInstance;
